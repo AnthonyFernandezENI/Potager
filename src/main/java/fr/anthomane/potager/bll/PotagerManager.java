@@ -17,8 +17,9 @@ public interface PotagerManager {
 	/**
 	 * Ajoute un carré 
 	 * @param c carré à ajouter
+	 * @throws PotagerManagerException 
 	 */
-	public void addCarre(Carre c);
+	public void addCarre(Carre c) throws PotagerManagerException;
 	/**
 	 * Récupère tous les carrés en BDD
 	 * @return Une liste de tous les carrés de tous les potagers
@@ -28,7 +29,7 @@ public interface PotagerManager {
 	public void updateCarre(Carre c);
 	public void deleteCarre(Carre c);
 	
-	public void addPlante(Plante p);
+	public void addPlante(Plante p) throws PotagerManagerException;
 	public List<Plante> getAllPlantes();
 	public void updatePlante(Plante p);
 	public void deletePlante(Plante p);
@@ -36,8 +37,9 @@ public interface PotagerManager {
 	/**
 	 * Ajoute une plante dans un carré
 	 * @param i instance d'implantation
+	 * @throws PotagerManagerException 
 	 */
-	public void addImplantation(Implantation i);
+	public void addImplantation(Implantation i) throws PotagerManagerException;
 	
 	/**
 	 * Récupère toutes les implantations d'un carré
@@ -49,6 +51,19 @@ public interface PotagerManager {
 	/**
 	 * Ajoute une action en BDD
 	 * @param a action concernée
+	 * @throws PotagerManagerException 
 	 */
-	public void addAction(Action a);
+	public void addAction(Action a) throws PotagerManagerException;
+	/**
+	 * Récupère les actions des deux prochaines semaines
+	 * @return les actions des deux prochaines semaines
+	 */
+	public List<Action> getAllActionsForTwoWeeks();
+	
+	/**
+	 * 
+	 * @param p plante ciblée
+	 * @return Une liste d'Implantation concernant la plante
+	 */
+	public List<Implantation> getLocalisationByPlante(Plante p);
 }

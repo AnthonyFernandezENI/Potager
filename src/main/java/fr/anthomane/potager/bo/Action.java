@@ -17,14 +17,14 @@ public class Action {
 	@Id
 	@GeneratedValue
 	private Integer idAction;
-	private LocalDate date;
+	private LocalDate dateAction;
 	private String evenement;
 	@ManyToOne
 	private Carre carre;
 	
-	public Action(LocalDate date, String evenement, Carre carre) {
+	public Action(LocalDate dateAction, String evenement, Carre carre) {
 		super();
-		this.date = date;
+		this.dateAction = dateAction;
 		this.evenement = evenement;
 		this.carre = carre;
 	}	
