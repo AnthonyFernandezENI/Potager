@@ -70,11 +70,23 @@ public class PotagerApplication implements CommandLineRunner {
 		Implantation Imp1 = new Implantation(c1, carotte, 10, LocalDate.of(2021, 5, 6), LocalDate.of(2021, 8, 6));
 		manager.addImplantation(Imp1);
 		try {
-			manager.addImplantation(new Implantation(c3, patate, 2500, LocalDate.now() , LocalDate.now().plusMonths(2)));
+			manager.addImplantation(new Implantation(c1, patate, 2, LocalDate.now() , LocalDate.now().plusMonths(2)));
 		} catch (PotagerManagerException e) {
 			System.err.println(e.getMessage());
 		}
-		manager.addImplantation(new Implantation(c1, patate, 20, LocalDate.now() , LocalDate.now().plusMonths(2)));
+		Plante tom1 = new Plante("Tomate", "Fruit", "coeur de boeuf", 1.0);
+		Plante tom2 = new Plante("Tomate", "Fruit", "cerise", 1.0);
+		
+		manager.addPlante(tom1);
+		manager.addPlante(tom2);
+		manager.addImplantation(new Implantation(c1, patate, 3, LocalDate.now() , LocalDate.now().plusMonths(2)));
+		manager.addImplantation(new Implantation(c1, patate, 3, LocalDate.now() , LocalDate.now().plusMonths(2)));
+		manager.addImplantation(new Implantation(c1, tom1, 3, LocalDate.now() , LocalDate.now().plusMonths(2)));
+		try {
+			manager.addImplantation(new Implantation(c1, tom2, 3, LocalDate.now() , LocalDate.now().plusMonths(2)));
+		} catch (PotagerManagerException e) {
+			System.err.println(e.getMessage());
+		}
 		
 //		manager.getLocalisationByPlante(patate).forEach(System.out::println);
 //		

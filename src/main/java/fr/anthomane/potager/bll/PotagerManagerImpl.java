@@ -1,6 +1,7 @@
 package fr.anthomane.potager.bll;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -68,16 +69,16 @@ public class PotagerManagerImpl implements PotagerManager {
 		// la somme des tailles des carrés doit etre inférieur à celle du potager
 		Potager p = c.getPotager();
 		double surfaceDisponible = p.getSurface();
-		List<Carre> lstCarreDuPotager = carreDao.findAllByPotager(p); //fait une liste des carrés actuellement dans le potager
+		List<Carre> lstCarreDuPotager = carreDao.findAllByPotager(p); // fait une liste des carrés actuellement dans le
+																		// potager
 		for (Carre carre : lstCarreDuPotager) {
 			surfaceDisponible -= carre.getSurface();
 		}
 		if ((surfaceDisponible - c.getSurface()) > 0) {
 			carreDao.save(c);
-		}
-		else {
-			throw new PotagerManagerException ("Il n'y a pas assez de place dans ce potager. "
-					+ "Surface disponible : "+surfaceDisponible+" cm², nécessaire : " + c.getSurface() +" cm².");
+		} else {
+			throw new PotagerManagerException("Il n'y a pas assez de place dans ce potager. " + "Surface disponible : "
+					+ surfaceDisponible + " cm², nécessaire : " + c.getSurface() + " cm².");
 		}
 	}
 
@@ -112,9 +113,10 @@ public class PotagerManagerImpl implements PotagerManager {
 		if (test == null) {
 			planteDao.save(p);
 		} else {
-			throw new PotagerManagerException("La plante " + p.getNom() + " de variété " + p.getVariete() + " exite déjà.");
+			throw new PotagerManagerException(
+					"La plante " + p.getNom() + " de variété " + p.getVariete() + " exite déjà.");
 		}
-		
+
 	}
 
 	@Override
@@ -139,24 +141,41 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Override
 	@Transactional
 	public void addImplantation(Implantation i) throws PotagerManagerException {
-		Carre c = i.getCarre();
-		double surfaceDisponible = c.getSurface();
-		List <Implantation> lstImplantationDuCarre = implantationDao.findAllByCarre(c);
+		Carre c = i.getCarre(); // Récupère le carré de l'implantation
+		List<Plante> lstPlante = new ArrayList<>(); // Liste des plantes déjà plantées
+		double surfaceDisponible = c.getSurface(); // Récupère la surface disponible initialement sur le carré
+		List<Implantation> lstImplantationDuCarre = implantationDao.findAllByCarre(c); // Récupère une liste des
+																						// implantations déjà présentes
 		for (Implantation implantation : lstImplantationDuCarre) {
+			// Retire la place occupée par chaque implantation de la surface disponible
 			surfaceDisponible -= implantation.getPlante().getSurface() * implantation.getQuantite();
-		}
-		if ((surfaceDisponible - (i.getPlante().getSurface() * i.getQuantite())) >= 0) {
-			
-			//TODO Ajouter une vérification de doublon ET s'il y a moins de 3 plantes différentes sur ce carré
-			implantationDao.save(i);
-		}
-		else {
-			throw new PotagerManagerException("Il n'y a pas assez de place dans ce carré. "
-					+ "Surface disponible : "+surfaceDisponible+" cm², nécessaire : " + i.getPlante().getSurface() * i.getQuantite() +" cm².");
-		}	
-		
-	}
 
+			// Si la liste des plantes ne contient pas la plante, on l'ajoute
+			if (!lstPlante.contains(implantation.getPlante())) {
+				lstPlante.add(implantation.getPlante());
+			}
+		}
+		// Si la place restante après ajout de l'implantation n'est pas négative, il y a
+		// assez de place
+		if ((surfaceDisponible - (i.getPlante().getSurface() * i.getQuantite())) >= 0) {
+
+			// s'il y a moins de 3 plantes différentes sur ce carré, l'implantation d'une nouvelle est possible
+			if (lstPlante.size() < 3) {
+				implantationDao.save(i);
+				// Si pas de place (déjà 3 plantes), affichage d'erreur
+			} else {
+				throw new PotagerManagerException("Pas plus de trois plantes différentes dans le même carré");
+			}
+
+		}
+		// Si pas de place (superficie insuffisante), affichage d'erreur
+		else {
+			throw new PotagerManagerException(
+					"Il n'y a pas assez de place dans ce carré. " + "Surface disponible : " + surfaceDisponible
+							+ " cm², nécessaire : " + i.getPlante().getSurface() * i.getQuantite() + " cm².");
+		}
+
+	}
 
 	@Override
 	@Transactional
@@ -168,13 +187,14 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Transactional
 	public void addAction(Action a) throws PotagerManagerException {
 		if (a.getDateAction().isAfter(LocalDate.now())) {
-			System.out.println("Votre événement " + a.getEvenement() + " pour le carré " + a.getCarre().getIdCarre() 
-					+ " du potager " + a.getCarre().getPotager().getNom() + " a bien été planifié pour le " + a.getDateAction());
+			System.out.println("Votre événement " + a.getEvenement() + " pour le carré " + a.getCarre().getIdCarre()
+					+ " du potager " + a.getCarre().getPotager().getNom() + " a bien été planifié pour le "
+					+ a.getDateAction());
 			actionDao.save(a);
 		} else {
 			throw new PotagerManagerException("La date de votre événement doit être supérieure à la date du jour.");
 		}
-		
+
 	}
 
 	@Override
@@ -182,10 +202,10 @@ public class PotagerManagerImpl implements PotagerManager {
 	public List<Action> getAllActionsForTwoWeeks() {
 		return actionDao.findAllForTwoWeeks(LocalDate.now(), LocalDate.now().plusWeeks(2));
 	}
-	
+
 	@Override
 	@Transactional
 	public List<Implantation> getLocalisationByPlante(Plante p) {
-		 return implantationDao.findAllByPlante(p);
+		return implantationDao.findAllByPlante(p);
 	}
 }
