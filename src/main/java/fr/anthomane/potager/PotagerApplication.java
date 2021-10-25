@@ -46,7 +46,12 @@ public class PotagerApplication implements CommandLineRunner {
 //		manager.getAllCarresByPotager(p2).forEach(System.out::println);
 		Action a1 = new Action(LocalDate.of(2021, 10, 23), "L'événement du 23", c2);	
 		Action a3 = new Action(LocalDate.of(2111, 10, 23), "L'événement du futur !", c2);
-		manager.addAction(a1);
+		try {
+			manager.addAction(a1);
+		} catch (Exception e2) {
+			// TODO Auto-generated catch block
+			System.err.println(e2.getMessage());
+		}
 		try {
 			manager.addAction(new Action(LocalDate.of(1911, 10, 23), "L'événement du passé", c2));
 		} catch (Exception e2) {
