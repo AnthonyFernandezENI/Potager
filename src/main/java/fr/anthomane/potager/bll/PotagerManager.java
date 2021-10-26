@@ -1,6 +1,7 @@
 package fr.anthomane.potager.bll;
 
 import java.util.List;
+import java.util.Optional;
 
 import fr.anthomane.potager.bo.Action;
 import fr.anthomane.potager.bo.Carre;
@@ -66,4 +67,6 @@ public interface PotagerManager {
 	 * @return Une liste d'Implantation concernant la plante
 	 */
 	public List<Implantation> getLocalisationByPlante(Plante p);
+	public Optional<Plante> getPlanteById(Integer id);
+	public Optional<Potager> getPotagerById(Integer id);
 }

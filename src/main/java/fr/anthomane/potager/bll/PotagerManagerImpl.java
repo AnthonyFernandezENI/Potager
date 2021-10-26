@@ -3,6 +3,7 @@ package fr.anthomane.potager.bll;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -207,5 +208,17 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Transactional
 	public List<Implantation> getLocalisationByPlante(Plante p) {
 		return implantationDao.findAllByPlante(p);
+	}
+
+	@Override
+	@Transactional
+	public Optional<Plante> getPlanteById(Integer id) {
+		return planteDao.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public Optional<Potager> getPotagerById(Integer id) {
+		return potagerDao.findById(id);
 	}
 }
