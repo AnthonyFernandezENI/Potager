@@ -7,18 +7,25 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @Entity
+@ToString (exclude = "carre")
+
 public class Implantation {
 	
 	@Id 
 	@GeneratedValue
 	private Integer idImplantation;
+
 	@ManyToOne
+	@JsonManagedReference
 	private Carre carre;
 	@ManyToOne
 	private Plante plante;
