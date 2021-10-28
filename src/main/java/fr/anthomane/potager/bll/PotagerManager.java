@@ -67,6 +67,7 @@ public interface PotagerManager {
 	 * @return Une liste d'Implantation concernant la plante
 	 */
 	public List<Implantation> getLocalisationByPlante(Plante p);
-	public Optional<Plante> getPlanteById(Integer id);
-	public Optional<Potager> getPotagerById(Integer id);
+	public Plante getPlanteById(Integer id);
+	public Potager getPotagerById(Integer id);
+	public Carre getCarreById(Integer id);
 }

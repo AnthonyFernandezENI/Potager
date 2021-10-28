@@ -212,13 +212,18 @@ public class PotagerManagerImpl implements PotagerManager {
 
 	@Override
 	@Transactional
-	public Optional<Plante> getPlanteById(Integer id) {
-		return planteDao.findById(id);
+	public Plante getPlanteById(Integer id) {
+		return planteDao.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
-	public Optional<Potager> getPotagerById(Integer id) {
-		return potagerDao.findById(id);
+	public Potager getPotagerById(Integer id) {
+		return potagerDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public Carre getCarreById(Integer id) {
+		return carreDao.findById(id).orElse(null);
 	}
 }

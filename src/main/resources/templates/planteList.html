@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Liste des plantes</title>
+</head>
+<body>
+	<div th:unless=${#lists.isEmpty(plantes)}>
+		<h2>Plantes</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Numéro</th>
+					<th>Nom</th>
+					<th>Variété</th>
+					<th>Type</th>
+					<th>Surface</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="plante : ${plantes}">
+					<td th:text="${plante.idPlante}"></td>
+					<td th:text="${plante.nom}"></td>
+					<td th:text="${plante.variete}"></td>
+					<td th:text="${plante.type}"></td>
+					<td th:text="${plante.surface}"></td>
+					<td><a th:href="@{/plante/{id}(id=${plante.idPlante})}">Détail</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<a th:href="@{/plante/liste}">Ajouter une plante</a>
+	
+</body>
+</html>

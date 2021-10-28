@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>potager - Accueil</title>
+</head>
+<body>
+<h1 th:text="${message}"></h1>
+	<p>Bienvenue dans l'application Potager !</p>
+	<a th:href="@{/potager/liste}">Les potagers</a><br>
+	<a th:href="@{/plante/liste}">Les plantes</a>
+<!-- 	<a th:href="@{/potager/liste/{id}(id=${pigeon.idPigeon})}">Les potagers</a>
+ --></body>
+</html>

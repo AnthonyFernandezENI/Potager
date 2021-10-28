@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Carré - Détail</title>
+</head>
+<body>
+
+<h2>Détail du carré</h2>
+
+<div> Numéro : <b th:text="${carre.idCarre}"></b> </div>
+<div> Surface : <b th:text="${carre.surface}"></b> </div>
+<div> Type de sol : <b th:text="${carre.typeSol}"></b> </div>
+<div> Exposition : <b th:text="${carre.typeExposition}"></b> </div>
+
+<div th:unless=${#lists.isEmpty(carre.implantations)}>
+		<h2>Liste des implantations</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Plante</th>
+					<th>Quantité</th>
+					<th>Plantée le </th>
+					<th>Date de récolte</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="implantation : ${carre.implantations}">
+					<td ><a th:text="|${implantation.plante.nom} ${implantation.plante.variete}|" th:href="@{/plante/{id}(id=${implantation.plante.idPlante})}"></a></td>
+					<td th:text="${implantation.quantite}"></td>
+					<td th:text="${implantation.dateMiseEnPlace}"></td>
+					<td th:text="${implantation.dateRecolte}"></td>
+			
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<a th:href="@{/implantation/liste}">Ajouter une implantation</a>
+</body>
+</html>

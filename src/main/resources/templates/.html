@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Potager</title>
+</head>
+<body>
+	<h1 th:text="${message}"></h1>
+	<form th:action="@{/calc}" th:object="${calculForm}" method="post">
+		<input type="number" th:field="*{calcul.nbA}" id="nbA"
+			placeholder="nbA"> 
+		<select th:field="*{calcul.operator}" id="operator">
+			<option value='+'>+</option>
+			<option value='-'>-</option>
+			<option value='*'>*</option>
+			<option value='/'>/</option>
+		</select> 
+		<input type="number" th:field="*{calcul.nbB}" id="nbB"
+			placeholder="nbB"> <input type="submit" value="Calculer">
+	</form>
+
+	<div th:unless=${#lists.isEmpty(calculs)}>
+		<h2>Historique des calculs</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Nombre 1</th>
+					<th>Opérateur</th>
+					<th>Nombre 2</th>
+					<th>Résultat</th>
+					<th>Timestamp</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="calcul : ${calculs}">
+					<td th:text="${calcul.nbA}"></td>
+					<td th:text="${calcul.operator}"></td>
+					<td th:text="${calcul.nbB}"></td>
+					<td th:text="${calcul.result}"></td>
+					<td th:text="${calcul.tsCalcul}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
