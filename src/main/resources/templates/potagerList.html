@@ -5,6 +5,9 @@
 <title>Potager - Liste</title>
 </head>
 <body>
+	<div th:if="${message}">
+		<h3 th:text="${message}"></h3>
+	</div>
 	<div th:unless=${#lists.isEmpty(potagers)}>
 		<h2>Potagers</h2>
 		<table>
@@ -30,6 +33,6 @@
 			</tbody>
 		</table>
 	</div>
-	<a th:href="@{/potager/liste}">Ajouter un potager</a>
+	<a th:href="@{/potager/add}">Ajouter un potager</a>
 </body>
 </html>
