@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title> Potager - Détail</title>
+</head>
+<body>
+<h2>Détail du potager</h2>
+
+<div> Nom : <b th:text="${potager.nom}"></b> </div>
+<div> Localisation : <b th:text="${potager.localisation}"></b> </div>
+<div> Ville : <b th:text="${potager.ville}"></b> </div>
+<div> Surface : <b th:text="${potager.surface}"></b> </div>
+
+<div th:unless=${#lists.isEmpty(potager.carres)}>
+		<h2>Liste des carrés</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Numéro</th>
+					<th>Surface</th>
+					<th>Type de sol</th>
+					<th>Exposition</th>
+					<th>Nombre d'implantation</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="carre : ${potager.carres}">
+					<td th:text="${carre.idCarre}"></td>
+					<td th:text="${carre.surface}"></td>
+					<td th:text="${carre.typeSol}"></td>
+					<td th:text="${carre.typeExposition}"></td>
+					<td th:text="${carre.implantations.size()}"></td>
+			
+					<td><a th:href="@{/carre/{id}(id=${carre.idCarre})}">Détail</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<a th:href="@{/carre/liste}">Ajouter un carré</a>
+</body>
+</html>

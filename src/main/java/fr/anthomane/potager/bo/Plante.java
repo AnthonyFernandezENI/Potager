@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Plante {
+	
 	@Id
 	@GeneratedValue
 	private Integer idPlante;
@@ -25,5 +26,8 @@ public class Plante {
 		this.type = type;
 		this.variete = variete;
 		this.surface = surface;
+		
+		//TODO ajouter les LovePlant pour chaque plante
+		
 	}
 }

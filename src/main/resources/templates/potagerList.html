@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Potager - Liste</title>
+</head>
+<body>
+	<div th:if="${message}">
+		<h3 th:text="${message}"></h3>
+	</div>
+	<div th:unless=${#lists.isEmpty(potagers)}>
+		<h2>Potagers</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Nom</th>
+					<th>Localisation</th>
+					<th>Ville</th>
+					<th>Surface</th>
+					<th>Carrés</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="potager : ${potagers}">
+					<td th:text="${potager.nom}"></td>
+					<td th:text="${potager.localisation}"></td>
+					<td th:text="${potager.ville}"></td>
+					<td th:text="${potager.surface}"></td>
+					<td th:text="${potager.carres.size()}"></td>
+					<td><a th:href="@{/potager/{id}(id=${potager.idPotager})}">Détail</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<a th:href="@{/potager/add}">Ajouter un potager</a>
+</body>
+</html>
