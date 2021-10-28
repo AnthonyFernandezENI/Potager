@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import fr.anthomane.potager.bll.PotagerManager;
+import fr.anthomane.potager.bll.PotagerManagerException;
+import fr.anthomane.potager.bo.Carre;
 import fr.anthomane.potager.bo.Potager;
 
 @Controller
@@ -37,8 +39,8 @@ public class PotagerController {
 	}
 	
 	@PostMapping("potager/add")
-	public String potagerSubmit(@Valid Potager p, BindingResult errors, Model model) {
-		 if (errors.hasErrors()) {
+	public String potagerSubmit(@Valid Potager p, BindingResult result, Model model) {
+		 if (result.hasErrors()) {
 			 return "potagerAdd";
 		 }else {
 			 manager.addPotager(p);
@@ -51,6 +53,30 @@ public class PotagerController {
 	public String potagerDetail(@PathVariable("id") Integer id,Model model) {
 		model.addAttribute("potager", manager.getPotagerById(id));
 		return "potagerDetail";
+	}
+	
+	@GetMapping("potager/{id}/add")
+	public String carreAdd(@PathVariable("id") Integer id, Carre c, Model model) {
+		Potager p = manager.getPotagerById(id);
+		c.setPotager(p);
+		model.addAttribute("potager", p);
+		return "carreAdd";
+	}
+	
+	@PostMapping("carre/add")
+	public String carreSubmit(@Valid Carre c, BindingResult result, Model model) {
+		System.err.println(c.getPotager());
+		 if (result.hasErrors()) {
+			 return "carreAdd";
+		 }else {
+			 try {
+				manager.addCarre(c);
+				model.addAttribute("message","Carré " + c.getIdCarre() + " ajouté avec succès");
+			} catch (PotagerManagerException e) {
+				e.printStackTrace();
+			}
+			 return "redirect:/potager/liste";
+		 }
 	}
 	
 	@GetMapping("carre/{id}")

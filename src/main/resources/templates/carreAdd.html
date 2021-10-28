@@ -5,13 +5,13 @@
 <title>Carré - Ajouter</title>
 </head>
 <body>
-	<form th:action="@{/carre/add}" th:object="${carre}" method="post">
-		<input type="text" minlength="5" th:field="*{nom}" id="nom" placeholder="nom">
-		<span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
-		<input type="text" th:field="*{localisation}" id="localisation" placeholder="localisation">
-		<span th:if="${#fields.hasErrors('localisation')}" th:errors="*{localisation}"></span>
-		<input type="text" th:field="*{ville}" id="ville" placeholder="ville">
-		<span th:if="${#fields.hasErrors('ville')}" th:errors="*{ville}"></span>
+	<form th:action= "@{/carre/add}" th:object="${carre}" method="post">
+	<p th:text="${carre.potager.nom}"></p>
+		<input type="hidden" th:field="*{potager}" id="potager" value="${carre.potager.idPotager}">
+		<input type="text" th:field="*{typeSol}" id="typeSol" placeholder="type de sol">
+		<span th:if="${#fields.hasErrors('typeSol')}" th:errors="*{typeSol}"></span>
+		<input type="text" th:field="*{typeExposition}" id="typeExposition" placeholder="type exposition">
+		<span th:if="${#fields.hasErrors('typeExposition')}" th:errors="*{typeExposition}"></span>
 		<input type="number" step="any" min="10" th:field="*{surface}" id="nom" placeholder="surface">
 		<span th:if="${#fields.hasErrors('surface')}" th:errors="*{surface}"></span>
 		<input type="submit" value="Ajouter">
