@@ -25,7 +25,6 @@ public class PotagerController {
 	
 	@GetMapping("/potager")
 	public String index(Model model) {
-		model.addAttribute("message", "Salut !");
 		return "index";
 	}
 	
@@ -55,6 +54,13 @@ public class PotagerController {
 	public String potagerDetail(@PathVariable("id") Integer id,Model model) {
 		model.addAttribute("potager", manager.getPotagerById(id));
 		return "potager/potagerDetail";
+	}
+	
+	@GetMapping("potager/{id}/delete")
+	public String potagerDelete(@PathVariable("id") Integer id, Model model) {
+		Potager p = manager.getPotagerById(id);
+		manager.deletePotager(p);
+		return "redirect:/potager/liste";
 	}
 	
 	@GetMapping("potager/{id}/add")
@@ -92,31 +98,50 @@ public class PotagerController {
 		return "carre/carreDetail";
 	}
 	
-	@GetMapping("carre/{id}/add")
-	public String implantationAdd(@PathVariable("id") Integer id, Implantation i, Model model) {
+	@GetMapping("carre/{id}/delete")
+	public String carreDelete(@PathVariable("id") Integer id, Model model) {
 		Carre c = manager.getCarreById(id);
-		i.setCarre(c);
+		int potagerId = c.getPotager().getIdPotager();
+		manager.deleteCarre(c);
+		return "redirect:/potager/"+ potagerId;
+	}
+	
+	@GetMapping("carre/{id}/add")
+	public String implantationAdd(@PathVariable("id") Integer id, ImplantationForm implantationForm, Model model) {
+		Carre c = manager.getCarreById(id);
 		model.addAttribute("carre", c);
+		implantationForm.setCarreId(c.getIdCarre());
 		model.addAttribute("plantes", manager.getAllPlantes());
 		return "implantation/implantationAdd";
 	}
 	
 	@PostMapping("implantation/add")
-	public String implantationSubmit(@Valid Implantation i, BindingResult result, Model model) {
-		System.err.println(result); 
+	public String implantationSubmit(@Valid ImplantationForm implantationForm, BindingResult result, Model model) {
+		System.err.println(implantationForm); 
 		if (result.hasErrors()) {
-			 model.addAttribute("carre", i.getCarre());
+			model.addAttribute("carre", manager.getCarreById(Integer.valueOf(implantationForm.getCarreId())));
 			 model.addAttribute("plantes", manager.getAllPlantes());
 			 return "implantation/implantationAdd";
 		 }else {
 			 try {
-				manager.addImplantation(i);
+				Implantation add = implantationForm.getImplantation();
+				add.setPlante(manager.getPlanteById(Integer.valueOf(implantationForm.getPlanteId())));
+				add.setCarre(manager.getCarreById(Integer.valueOf(implantationForm.getCarreId())));
+				manager.addImplantation(add);
 				model.addAttribute("message","Implantation ajoutée avec succès");
 			} catch (PotagerManagerException e) {
 				e.printStackTrace();
 			}
-			 return "redirect:/carre/" + i.getCarre().getIdCarre();
+			 return "redirect:/carre/" + implantationForm.getCarreId();
 		 }
+	}
+	
+	@GetMapping("implantation/{id}/delete")
+	public String implantationDelete(@PathVariable("id") Integer id, Model model) {
+		Implantation i = manager.getImplantationById(id);
+		int carreId = i.getCarre().getIdCarre();
+		manager.deleteImplantation(i);
+		return "redirect:/carre/"+ carreId;
 	}
 	
 	

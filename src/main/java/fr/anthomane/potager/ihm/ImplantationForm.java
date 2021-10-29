@@ -1,12 +1,14 @@
 package fr.anthomane.potager.ihm;
 
-import fr.anthomane.potager.bo.Potager;
+import fr.anthomane.potager.bo.Implantation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class PotagerForm {
-	private Potager potager;
+public class ImplantationForm {
+	private Implantation implantation;
+	private Integer planteId;
+	private Integer carreId;
 }

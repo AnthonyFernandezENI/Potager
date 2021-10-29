@@ -28,7 +28,7 @@
 					<td th:text="${plante.variete}"></td>
 					<td th:text="${plante.type}"></td>
 					<td th:text="${plante.surface}"></td>
-					<td><a th:href="@{/plante/{id}(id=${plante.idPlante})}">Détail</a></td>
+					<td><a th:href="@{/plante/{id}(id=${plante.idPlante})}" class="btn btn-outline-dark" role="button">Détail</a></td>
 				</tr>
 			</tbody>
 		</table>

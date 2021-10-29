@@ -3,7 +3,6 @@ package fr.anthomane.potager.bll;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -61,6 +60,14 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Override
 	@Transactional
 	public void deletePotager(Potager p) {
+		List<Carre> carres = carreDao.findAllByPotager(p);
+		for (Carre carre : carres) {
+			List<Implantation> implantations = implantationDao.findAllByCarre(carre);
+			for (Implantation implantation : implantations) {
+				implantationDao.delete(implantation);
+			}
+			carreDao.delete(carre);
+		}
 		potagerDao.delete(p);
 	}
 
@@ -105,6 +112,10 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Override
 	@Transactional
 	public void deleteCarre(Carre c) {
+		List<Implantation> implantations = implantationDao.findAllByCarre(c);
+		for (Implantation implantation : implantations) {
+			implantationDao.delete(implantation);
+		}
 		carreDao.delete(c);
 	}
 
@@ -226,5 +237,16 @@ public class PotagerManagerImpl implements PotagerManager {
 	@Override
 	public Carre getCarreById(Integer id) {
 		return carreDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public Implantation getImplantationById(Integer id) {
+		return implantationDao.findById(id).orElse(null);
+	}
+
+	@Override
+	public void deleteImplantation(Implantation i) {
+		implantationDao.delete(i);
+		
 	}
 }

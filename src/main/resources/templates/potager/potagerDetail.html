@@ -2,9 +2,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 <title> Potager - Détail</title>
 </head>
 <body>
+<div class="container">
 <h2>Détail du potager</h2>
 
 <div> Nom : <b th:text="${potager.nom}"></b> </div>
@@ -14,7 +17,7 @@
 
 <div th:unless=${#lists.isEmpty(potager.carres)}>
 		<h2>Liste des carrés</h2>
-		<table>
+		<table class="table table-success table-striped">
 			<thead>
 				<tr>
 					<th>Numéro</th>
@@ -33,11 +36,15 @@
 					<td th:text="${carre.typeExposition}"></td>
 					<td th:text="${carre.implantations.size()}"></td>
 			
-					<td><a th:href="@{/carre/{id}(id=${carre.idCarre})}">Détail</a></td>
+					<td>
+					<a th:href="@{/carre/{id}(id=${carre.idCarre})}" class="btn btn-outline-dark" role="button">Détail</a>
+					<a th:href="@{/carre/{id}/delete(id=${carre.idCarre})}" class="btn btn-outline-danger" role="button">Supprimer</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<a th:href="@{/potager/{id}/add(id=${potager.idPotager})}">Ajouter un carré</a>
+	<a th:href="@{/potager/{id}/add(id=${potager.idPotager})}"  class="btn btn-outline-dark d-grid gap-2 col-2 mx-auto" role="button">Ajouter un carré</a>
+	</div>
 </body>
 </html>

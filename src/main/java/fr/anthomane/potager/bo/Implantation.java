@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -30,7 +32,9 @@ public class Implantation {
 	@ManyToOne
 	private Plante plante;
 	private Integer quantite;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateMiseEnPlace;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dateRecolte;
 	
 	public Implantation(Carre carre, Plante plante, Integer quantite, LocalDate dateMiseEnPlace,

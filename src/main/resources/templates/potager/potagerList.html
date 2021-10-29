@@ -31,7 +31,10 @@
 					<td th:text="${potager.ville}"></td>
 					<td th:text="${potager.surface}"></td>
 					<td th:text="${potager.carres.size()}"></td>
-					<td><a th:href="@{/potager/{id}(id=${potager.idPotager})}">Détail</a></td>
+					<td>
+						<a th:href="@{/potager/{id}(id=${potager.idPotager})}" class="btn btn-outline-dark" role="button">Détail</a>
+						<a th:href="@{/potager/{id}/delete(id=${potager.idPotager})}" class="btn btn-outline-danger" role="button">Supprimer</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
