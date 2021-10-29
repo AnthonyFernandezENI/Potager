@@ -9,7 +9,7 @@
 <body>
 <div class="container">
 	<div th:unless=${#lists.isEmpty(plantes)}>
-		<h2>Plantes</h2>
+	<div class="d-grid gap-2 col-2 mx-auto"><h2>Plantes</h2></div>
 		<table class="table table-success table-striped">
 			<thead>
 				<tr>
@@ -33,7 +33,8 @@
 			</tbody>
 		</table>
 	</div>
-	<a th:href="@{/plante/liste}">Ajouter une plante</a>
+	<a th:href="@{/plante/add}" class="btn btn-outline-dark d-grid gap-2 col-2 mx-auto" role="button">Ajouter une plante</a>
+	
 </div>
 </body>
 </html>
