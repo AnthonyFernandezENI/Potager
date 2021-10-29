@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Implantation - Ajouter</title>
+</head>
+<body>
+<h2 th:text="|Implantation sur carré ${implantation.carre.idCarre} du potager ${implantation.carre.potager.nom}|"></h2>
+	<form th:action= "@{/implantation/add}" th:object="${implantation}" method="post">
+		<input type="hidden" th:field="*{carre}" id="carre" value="${implantation.carre.idCarre}">
+		<label for="plante">Plante</label>
+		<select  th:field="*{plante}" id="plante">
+			<option th:each="plante : ${plantes}" value="${plante.idPlante}" th:text="|${plante.nom} ${plante.variete}|"></option>
+		</select>
+		<br><label for="dateMiseEnPlace">Date de mise en place</label>
+		<input type="date" th:field="*{dateMiseEnPlace}" id="dateMiseEnPlace">
+		<br><label for="dateRecolte">Date de récolte</label>
+		<input type="date" th:field="*{dateRecolte}"  id="dateRecolte">
+		<!-- 		TODO Ajouter les dates de plantation et de récolte -->
+		<br><label for="quantite">Quantité</label>
+		<input type="number" min="1" th:field="*{quantite}" id="quantite" placeholder="Quantité">
+		<span th:if="${#fields.hasErrors('quantite')}" th:errors="*{quantite}"></span>
+		<br><input type="submit" value="Ajouter">
+	</form>
+</body>
+</html>
