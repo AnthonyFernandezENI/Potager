@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Carré - Ajouter</title>
+</head>
+<body>
+	<form th:action= "@{/carre/add}" th:object="${carre}" method="post">
+	<h2 th:text="|Ajout d'un carré au potager ${carre.potager.nom}|"></h2>
+		<input type="hidden" th:field="*{potager}" id="potager" value="${carre.potager.idPotager}">
+		<br><label for="typeSol">Type de sol</label>
+		<input type="text" th:field="*{typeSol}" id="typeSol" placeholder="type de sol">
+		<span th:if="${#fields.hasErrors('typeSol')}" th:errors="*{typeSol}"></span>
+		<br><label for="typeExposition">Type d'exposition</label>
+		<select th:field="*{typeExposition}" id="typeExposition">
+			<option value='Soleil'>Soleil</option>
+			<option value='Ombre'>Ombre</option>
+			<option value='Mi-ombre'>Mi-ombre</option>
+		</select>
+		<br><label for="surface">Surface (en cm²)</label>
+		<input type="number" step="any" min="10" th:field="*{surface}" id="nom" placeholder="surface">
+		<span th:if="${#fields.hasErrors('surface')}" th:errors="*{surface}"></span>
+		<input type="submit" value="Ajouter">
+	</form>
+</body>
+</html>

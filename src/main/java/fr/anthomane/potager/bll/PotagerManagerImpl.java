@@ -70,10 +70,11 @@ public class PotagerManagerImpl implements PotagerManager {
 		// la somme des tailles des carrés doit etre inférieur à celle du potager
 		Potager p = c.getPotager();
 		double surfaceDisponible = p.getSurface();
-		List<Carre> lstCarreDuPotager = carreDao.findAllByPotager(p); // fait une liste des carrés actuellement dans le
-																		// potager
-		for (Carre carre : lstCarreDuPotager) {
-			surfaceDisponible -= carre.getSurface();
+		List<Carre> lstCarreDuPotager = carreDao.findAllByPotager(p); // fait une liste des carrés actuellement dans le potager
+		if (carreDao.findAllByPotager(p) != null) {
+			for (Carre carre : lstCarreDuPotager) {
+				surfaceDisponible -= carre.getSurface();
+			}
 		}
 		if ((surfaceDisponible - c.getSurface()) > 0) {
 			carreDao.save(c);

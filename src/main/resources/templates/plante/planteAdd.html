@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Potager - Ajouter</title>
+</head>
+<body>
+	<form th:action="@{/plante/add}" th:object="${plante}" method="post">
+		<label for="type">Nom</label>
+		<input type="text" minlength="5" th:field="*{nom}" id="nom" placeholder="Nom">
+		<span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+		<br><label for="type">Type</label>
+		<select th:field="*{type}" id="type">
+			<option value='Racine'>Racine</option>
+			<option value='Feuille'>Feuille</option>
+			<option value='Fruit'>Fruit</option>
+		</select>
+		<span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+		<br><label for="type">Variété</label>
+		<input type="text" th:field="*{variete}" id="variete" placeholder="Variété">
+		<span th:if="${#fields.hasErrors('variete')}" th:errors="*{variete}"></span>
+		<br><label for="type">Surface</label>
+		<input type="number" step="any" min="0" th:field="*{surface}" id="surface" placeholder="Surface">
+		<span th:if="${#fields.hasErrors('surface')}" th:errors="*{surface}"></span>
+		<br><input type="submit" value="Ajouter">
+	</form>
+</body>
+</html>
